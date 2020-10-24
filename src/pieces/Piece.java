@@ -7,22 +7,25 @@ import chess.pieceCoordinate;
 
 public class Piece {
 	
-	public class Square{
-		
-		private pieceCoordinate coordinates;
-		private Piece occupier;
-		
-		public Square(int rank, int file, Piece occupier) {
-			this.coordinates = new pieceCoordinate(rank, file);
-			this.occupier = occupier;
-		}
-		
-		public Square(char rank, char file, Piece occupier) {
-			this.coordinates = new pieceCoordinate(rank, file);
-			this.occupier = occupier;
-		}
-		
-		
-		
+	private Color color;
+	
+	public Piece(Color color){
+		this.color = color;
+	}
+	
+	public Color returnColor() {
+		return this.color;
+	}
+	
+	/*public boolean isValidMove(ChessCoordinates start, ChessCoordinates end, SpecialCases specialCases){
+		return start.distanceFrom(end) <= 7;
+	}*/
+	
+	public ArrayList<pieceCoordinate> farthestMovesFrom(pieceCoordinate start) {
+		return null;
+	}
+
+	public String toString() {
+		return this.color.equals(Color.WHITE)? "w" : "b";
 	}
 }
