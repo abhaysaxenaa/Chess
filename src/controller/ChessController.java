@@ -1,66 +1,90 @@
 package controller;
 
-import java.awt.Color;
-import java.util.ArrayList;
-
-import chess.Board;
-//import chess.Board.chessboard;
-import chess.pieceCoordinate;
+import chess.chessBoard;
+import chess.chessBoard.Square;
 import pieces.*;
+import chess.Coordinates;
 
 public class ChessController {
 	
-	private Board board;
-	public boolean isEndGame;
-	private Color curPlayer;
+	private chessBoard chessboard;
+	public boolean hasEnded;
+	private String currPlayer;
 	
 	public ChessController() {
-		this.board = new Board();
-		this.isEndGame = false;
-		this.curPlayer = Color.WHITE;
+		this.chessboard = new chessBoard();
+		this.hasEnded = false;
+		this.currPlayer = "White";
 	}
 	
-	public Board getBoard() {
-		return this.board;
+	public chessBoard getBoard() {
+		return this.chessboard;
 	}
 	
-	/*public void makeMove(pieceCoordinate curr, pieceCoordinate limit, Piece promotion) {
-		if (curr.equals(limit)) {
+	public void makeMove(Coordinates curr, Coordinates end, ChessPiece promote) {
+		
+		if (curr.getRow() == end.getRow() && curr.getCol() == end.getCol()) {
+			
 			System.out.println("Illegal move, try again");
 			return;
-		}
-
-		Piece movingPiece = this.board.getchessBoard(curr).getOccupier(),
-				takenPiece = this.board.getchessBoard(limit).getOccupier();
-		Case specialCases = new Case();
-
-		specialCases.isCapturing = takenPiece == null ? false : true;
-		specialCases.isPromoting = promotion == null ? false : true;
-		specialCases.pieceInPath = this.isPieceInPath(curr, limit);
-
-		if (movingPiece == null || !movingPiece.getColor().equals(curPlayer)
-				|| takenPiece != null && takenPiece.getColor().equals(curPlayer))
-			System.out.println("Illegal move, try again");
-		else if (movingPiece.isValidMove(curr, limit, specialCases)) {
-			int startRank = start.getRank(), startFile = curr.getFile(), endRank = limit.getRank(),
-					endFile = end.getFile();
-
-			if (movingPiece instanceof Pawn && specialCases.canPromote)
-				this.board.getSquare(endRank, endFile).setOccupier(promotion);
-			else
-				this.board.getSquare(endRank, endFile).setOccupier(movingPiece);
-
-			this.board.getSquare(startRank, startFile).setOccupier(null);
-
-			if (takenPiece instanceof King) {
-				this.isEndGame = true;
-				System.out.println("Checkmate");
-			} else if (kingIsInCheck())
-				System.out.println("Check");
-			switchCurPlayer();
+			
 		} else {
-			System.out.println("Illegal move, try again");
+			
+			int row = curr.getRow(), col = curr.getCol();
+			int finalrow = end.getRow(), finalcol = end.getCol();
+			ChessPiece currPiece = this.chessboard.getcurrSquare(row, col).getcurrPiece();
+			ChessPiece endPiece = this.chessboard.getcurrSquare(finalrow, finalcol).getcurrPiece();
+			
+			//Check for special cases
+			//IMPLEMENT THIS METHOD
 		}
-	}*/
+	}
+	
+	public boolean checkPath(Coordinates curr, Coordinates end) {
+		
+		int row = curr.getRow(), col = curr.getCol(), finalRow = end.getRow(), finalCol = end.getCol();
+		
+		//Checks if there is any other piece vertical to the coordinates.
+		if (curr.verticalCheck(end)) {
+			if (row < finalRow) {
+				for (int i = row; i < finalRow; i++) {
+					if (this.chessboard.getcurrSquare(i, col) != null) {
+						return true;
+					}
+				}
+				return false;
+			}
+			for (int i = finalRow; i > row; i--) {
+				if (this.chessboard.getcurrSquare(i, col) != null) {
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		//Horizontal Check.
+		if (curr.horizontalCheck(end)) {
+			if (col < finalCol) {
+				for (int i = col; i < finalCol; i++) {
+					if (this.chessboard.getcurrSquare(row, i) != null) {
+						return true;
+					}
+				}
+				return false;
+			}
+			for (int i = finalCol; i > col; i--) {
+				if (this.chessboard.getcurrSquare(row, i) != null) {
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		//Adjacency Check.
+		//IMPLEMENT ADJACENCY CHECK.
+		
+		return false;
+		
+	}
 	
 }
