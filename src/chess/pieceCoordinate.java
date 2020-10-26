@@ -40,6 +40,11 @@ public class pieceCoordinate {
 		return (char) (this.file + 'a');
 	}
 	
+	/*public boolean isDiagonalTo(pieceCoordinate other) {
+		return this.isVerticalTo(other) ? false
+				: (int) Math.abs((other.file - this.file) / (other.rank - this.rank)) == 1;
+	}*/
+	
 	public String toString() {
 		return Character.toString(getFileChar()) + Character.toString(getRankChar());
 	}
