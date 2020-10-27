@@ -16,7 +16,7 @@ public class ChessPiece {
 		return this.color;
 	}
 	
-	public boolean checkValidity(Coordinates curr, Coordinates end /*SpecialCase)*/){
+	public boolean checkValidity(Coordinates curr, Coordinates end, Case specialCases){
 		if (curr.calculateDistance(end) > 8 || (curr.getRow() < 0 || curr.getCol() < 0)) {
 			return false;
 		} else {

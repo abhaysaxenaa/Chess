@@ -48,7 +48,7 @@ public class ChessController {
 			if (currPiece == null || currPiece.getPlayerColor().equals(endPiece.getPlayerColor()) || (endPiece != null && endPiece.getPlayerColor().equals(currPiece.getPlayerColor()))){
 				System.out.println("Illegal move, try again");
 				return;
-			} else if (currPiece.checkValidity(curr, end)) {
+			} else if (currPiece.checkValidity(curr, end, specialCases)) {
 				if (currPiece instanceof Pawn && specialCases.canPromote) {
 					this.chessboard.getcurrSquare(end.getRow(), end.getCol()).setcurrPiece(promote);
 				} else {
@@ -56,7 +56,12 @@ public class ChessController {
 				}
 				this.chessboard.getcurrSquare(curr.getRow(), curr.getCol()).setcurrPiece(null);
 				
-				//Check for check or checkmate.
+				if (endPiece instanceof King) {
+					this.hasEnded = true;
+					System.out.println("Checkmate");
+				} else if (checkOnKing())
+					System.out.println("Check");
+				flipPlayers();
 				
 			} else {
 				System.out.println("Illegal move, try again");
@@ -126,6 +131,36 @@ public class ChessController {
 		
 	}
 	
+	
+	public boolean possibleCheck(int row, int col) {
+		
+		ChessPiece currPiece = this.chessboard.getcurrSquare(row, col).getcurrPiece();
+		Coordinates curr = new Coordinates(row, col);
+		ArrayList<Coordinates> pieceMove = currPiece.pieceMoveList(curr);
+		
+		if (pieceMove != null) {
+			for (int i = 0; i < pieceMove.size(); i++) {
+				if (this.directCheck(curr, pieceMove.get(i))) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	private boolean checkOnKing() {
+		
+		for (int i = 0; i <= 7; i++)
+			for (int j = 0; j <= 7; j++) {
+				Square currSquare = this.chessboard.getcurrSquare(i, j);
+				if (currSquare != null && currSquare.getcurrPiece().getPlayerColor().equals(currPlayer))
+					return possibleCheck(i, j);
+			}
+
+		return false;
+	}
+	
+
 	public boolean directCheck(Coordinates curr, Coordinates end) {
 		
 		if (curr.getCol() == end.getCol()) {
@@ -157,8 +192,8 @@ public class ChessController {
 			int i = end.getRow() > curr.getRow() ? 1 : -1, j = end.getCol() > curr.getCol() ? 1 : -1;
 			
 			for (int itrRow = curr.getRow() + i; itrRow != end.getRow(); itrRow = itrRow + i) {
-				for (int itrCol = curr.getCol() + j; itrCol != end.getCol(); itrCol = itrCol = itrCol + j) {
-					Square check = this.chessboard.getcurrSquare(i, j);
+				for (int itrCol = curr.getCol() + j; itrCol != end.getCol(); itrCol = itrCol + j) {
+					Square check = this.chessboard.getcurrSquare(itrRow, itrCol);
 					if (check != null) {
 						if (check.getcurrPiece() instanceof King) {
 							return true;
@@ -169,34 +204,6 @@ public class ChessController {
 				}
 			}
 		}
-		return false;
-	}
-	
-	public boolean possibleCheck(int row, int col) {
-		
-		ChessPiece currPiece = this.chessboard.getcurrSquare(row, col).getcurrPiece();
-		Coordinates curr = new Coordinates(row, col);
-		ArrayList<Coordinates> pieceMove = currPiece.pieceMoveList(curr);
-		
-		if (pieceMove != null) {
-			for (int i = 0; i < pieceMove.size(); i++) {
-				if (this.directCheck(curr, pieceMove.get(i))) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-	
-	private boolean checkOnKing() {
-		
-		for (int i = 0; i <= 7; i++)
-			for (int j = 0; j <= 7; j++) {
-				Square currSquare = this.chessboard.getcurrSquare(i, j);
-				if (currSquare != null && currSquare.getcurrPiece().getPlayerColor().equals(currPlayer))
-					return possibleCheck(i, j);
-			}
-
 		return false;
 	}
 	
