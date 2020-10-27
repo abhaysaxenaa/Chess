@@ -59,7 +59,7 @@ public class chessBoard {
 		
 		this.chessboard = new Square[8][8];
 		String playerColor;
-		ChessPiece createPiece;
+		ChessPiece createPiece = null;
 		
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
@@ -88,23 +88,30 @@ public class chessBoard {
 			}
 		}
 		
-		/*private final Piece[][] STANDARD_SETUP = {
-        { new Rook(WHITE), new Knight(WHITE), new Bishop(WHITE),
-                new Queen(WHITE), new King(WHITE), new Bishop(WHITE),
-                new Knight(WHITE), new Rook(WHITE) },
-        { new Pawn(WHITE), new Pawn(WHITE), new Pawn(WHITE),
-                new Pawn(WHITE), new Pawn(WHITE), new Pawn(WHITE),
-                new Pawn(WHITE), new Pawn(WHITE) },
+		//USE THIS CONSTRUCTOR INSTEAD
+		
+		/*public chessBoard(){
+		 * this.chessboard = new Square[8][8];
+		 * 
+		 * this.chessBoard = {
+        { new Rook("White"), new Knight("White"), new Bishop("White"),
+                new Queen("White"), new King("White"), new Bishop("White"),
+                new Knight("White"), new Rook("White") },
+        { new Pawn("White"), new Pawn("White"), new Pawn("White"),
+                new Pawn("White"), new Pawn("White"), new Pawn("White"),
+                new Pawn("White"), new Pawn("White") },
         { null, null, null, null, null, null, null, null },
         { null, null, null, null, null, null, null, null },
         { null, null, null, null, null, null, null, null },
         { null, null, null, null, null, null, null, null },
-        { new Pawn(BLACK), new Pawn(BLACK), new Pawn(BLACK),
-                new Pawn(BLACK), new Pawn(BLACK), new Pawn(BLACK),
-                new Pawn(BLACK), new Pawn(BLACK) },
-        { new Rook(BLACK), new Knight(BLACK), new Bishop(BLACK),
-                new Queen(BLACK), new King(BLACK), new Bishop(BLACK),
-                new Knight(BLACK), new Rook(BLACK) } };*/
+        { new Pawn("Black"), new Pawn("Black"), new Pawn("Black"),
+                new Pawn("Black"), new Pawn("Black"), new Pawn("Black"),
+                new Pawn("Black"), new Pawn("Black") },
+        { new Rook("Black"), new Knight("Black"), new Bishop("Black"),
+                new Queen("Black"), new King("Black"), new Bishop("Black"),
+                new Knight("Black"), new Rook("Black") } };
+                
+        }*/
 	}
 	
 	public Square getcurrSquare(Coordinates coordinate) {
