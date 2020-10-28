@@ -10,29 +10,34 @@ import chess.Coordinates;
 
 public class ChessPiece {
 	
+	//Private Variable: color, of type String.
 	private String color;
 	
+	//Constructor: Creates a new Piece
 	public ChessPiece(String color) {
 		this.color = color;
 	}
 	
+	//Getter Method: Gets the Piece's current color property.
 	public String getPlayerColor() {
 		return this.color;
 	}
 	
-	//Can potentially be removed
+	//Checks for edge case checks for individual pieces in accordance to its coordinates.
 	public boolean checkValidity(Coordinates curr, Coordinates end, Case specialCases){
-		if (curr.calculateDistance(end) > 8 || curr.checkBoardLimits(end)) {
+		if (curr.calculateDistance(end) >= 8 || curr.checkBoardLimits(end)) {
 			return false;
 		} else {
 			return true;
 		}
 	} 
 	
+	//The ArrayList holds the position of farthest locations where the Piece can move across the chess board. This property is inherited across individual Pieces.
 	public ArrayList<Coordinates> pieceMoveList(Coordinates start) {
 		return null;
 	}
-			
+	
+	//Prints the color property of the current Piece.
 	public String printPiece() {
 		if (this.color.equals("White")) {
 			return "w";

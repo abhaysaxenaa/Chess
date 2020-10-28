@@ -25,6 +25,9 @@ public class ChessController {
 		return this.chessboard;
 	}
 	
+	/*Moves the piece from the current coordinate to the end coordinate after a series of checks. Also
+	 * accepts a potential promotion if it is passed (and is not null). Also checks for a check, or a final checkmate.
+	 */
 	public void makeMove(Coordinates curr, Coordinates end, ChessPiece promote) {
 		
 		if (curr.getRow() != end.getRow() && curr.getCol() != end.getCol()) {
@@ -34,7 +37,7 @@ public class ChessController {
 			ChessPiece currPiece = this.chessboard.getcurrSquare(row, col).getcurrPiece();
 			ChessPiece endPiece = this.chessboard.getcurrSquare(finalrow, finalcol).getcurrPiece();
 			
-			/*IMPLEMENT DIFFERENTLY*/
+			/*IMPLEMENT YOUR METHOD HERE*/
 			Case specialCases = new Case();
 			specialCases.isCapturing = endPiece == null ? false : true;
 			specialCases.isPromoting = promote == null ? false : true;
@@ -68,9 +71,10 @@ public class ChessController {
 		} 
 	}
 	
+	//Checks if there is any piece in between the current and end coordinate for the makeMove method to operate.
 	public boolean checkPath(Coordinates curr, Coordinates end) {
 		
-int row = curr.getRow(), col = curr.getCol(), finalRow = end.getRow(), finalCol = end.getCol();
+		int row = curr.getRow(), col = curr.getCol(), finalRow = end.getRow(), finalCol = end.getCol();
 		
 		//Checks if there is any other piece vertical to the coordinates.
 		if (curr.getCol() == end.getCol()) {
@@ -143,7 +147,7 @@ int row = curr.getRow(), col = curr.getCol(), finalRow = end.getRow(), finalCol 
 		
 	}
 	
-	
+	//Checks if a given coordinate is in collision with a King piece.
 	public boolean possibleCheck(int row, int col) {
 		
 		ChessPiece currPiece = this.chessboard.getcurrSquare(row, col).getcurrPiece();
@@ -163,6 +167,7 @@ int row = curr.getRow(), col = curr.getCol(), finalRow = end.getRow(), finalCol 
 		return false;
 	}
 	
+	//Checks if a King piece is currently in a 'Check'.
 	private boolean checkOnKing() {
 		
 		for (int i = 0; i <= 7; i++)
@@ -175,7 +180,7 @@ int row = curr.getRow(), col = curr.getCol(), finalRow = end.getRow(), finalCol 
 		return false;
 	}
 	
-
+	//Condition Check: If a King piece is the primary collision for two coordinates.
 	public boolean directCheck(Coordinates curr, Coordinates end) {
 		
 		if (curr.getCol() == end.getCol()) {
@@ -229,10 +234,12 @@ int row = curr.getRow(), col = curr.getCol(), finalRow = end.getRow(), finalCol 
 		return false;
 	}
 	
+	//Returns a string of the current player.
 	public String getcurrPlayer() {
 		return this.currPlayer;
 	}
 	
+	//Flips the current player to the other player, used for spontaneous switching for certain special cases.
 	public void flipPlayers() {
 		if (this.currPlayer.equals("White")) {
 			this.currPlayer = "Black";

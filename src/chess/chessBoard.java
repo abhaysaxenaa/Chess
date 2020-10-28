@@ -65,6 +65,7 @@ public class chessBoard {
 	
 	private Square[][] chessboard;
 	
+	//Constructor
 	public chessBoard() {
 		this.chessboard = new Square[8][8];
 		String pieceColor = null;
@@ -73,7 +74,7 @@ public class chessBoard {
 			for (int curFile = 0; curFile < 8; curFile++) {
 				ChessPiece newPiece = null;
 
-				if (curRank == 0 || curRank == 7) { // initialize non-pawns
+				if (curRank == 0 || curRank == 7) {
 					pieceColor = curRank == 0 ? "Black" : "White";
 
 					if (curFile == 0 || curFile == 7)
@@ -86,38 +87,12 @@ public class chessBoard {
 						newPiece = new Queen(pieceColor);
 					else
 						newPiece = new King(pieceColor);
-				} else if (curRank == 1 || curRank == 6) // initialize pawns
+				} else if (curRank == 1 || curRank == 6)
 					newPiece = new Pawn(curRank == 1 ? "Black" : "White");
 
 				this.chessboard[curRank][curFile] = new Square(curRank, curFile, newPiece);
 			}
 	}
-	
-		
-		//USE THIS CONSTRUCTOR INSTEAD
-		
-		/*public chessBoard(){
-		 * this.chessboard = new Square[8][8];
-		 * 
-		 * this.chessBoard = {
-        { new Rook("White"), new Knight("White"), new Bishop("White"),
-                new Queen("White"), new King("White"), new Bishop("White"),
-                new Knight("White"), new Rook("White") },
-        { new Pawn("White"), new Pawn("White"), new Pawn("White"),
-                new Pawn("White"), new Pawn("White"), new Pawn("White"),
-                new Pawn("White"), new Pawn("White") },
-        { null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null },
-        { new Pawn("Black"), new Pawn("Black"), new Pawn("Black"),
-                new Pawn("Black"), new Pawn("Black"), new Pawn("Black"),
-                new Pawn("Black"), new Pawn("Black") },
-        { new Rook("Black"), new Knight("Black"), new Bishop("Black"),
-                new Queen("Black"), new King("Black"), new Bishop("Black"),
-                new Knight("Black"), new Rook("Black") } };
-                
-        }*/
 	
 	public Square getcurrSquare(Coordinates coordinate) {
 		return this.chessboard[coordinate.getRow()][coordinate.getCol()];

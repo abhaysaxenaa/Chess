@@ -14,7 +14,7 @@ public class Knight extends ChessPiece{
 	}
 	
 	public boolean checkValidity(Coordinates curr, Coordinates end, Case specialCase) {
-		if (curr.calculateDistance(end) <= 8 && curr.checkBoardLimits(end)) {
+		if (curr.calculateDistance(end) <= 7 && curr.checkBoardLimits(end)) {
 			if (knightCondition(curr, end)) {
 				return true;
 			} else {

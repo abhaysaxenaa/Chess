@@ -1,11 +1,11 @@
-package pieces;
+ package pieces;
 
 public class Case {
 	public boolean isCapturing = false,
 	 isFirstMove = false,
-	 enPassant = false,
+	 /*Might not have used this*/ enPassant = false,
 	 canPromote = false,
 	 isPromoting = false,
 	 pieceInPath = false,
-	 canKnight = false;
+	 /*Might not have used this*/ canKnight = false;
 }

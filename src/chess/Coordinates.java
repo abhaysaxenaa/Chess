@@ -30,16 +30,7 @@ public class Coordinates {
 		return this.col;
 	}
 	
-	/* NOT NEEDED
-	public char getRankChar() {
-		return (char) (this.rank + '1');
-	}
-	
-	public char getFileChar() {
-		return (char) (this.file + 'a');
-	}
-	*/
-	
+	//Checks if current coordinate is diagonal to the argument coordinate.
 	public boolean diagonalCheck(Coordinates check) {
 		if (this.verticalCheck(check)) return false;
 		if ((check.col - this.col) / (check.row - this.row) == 1 || (check.col - this.col) - (check.row - this.row) == -1){
@@ -67,6 +58,7 @@ public class Coordinates {
 		}
 	}
 	
+	//Checks if current coordinate is adjacent to thee argument coordinate.
 	public boolean adjacencyCheck(Coordinates check) {
 		if (this.row <= check.row + 1 && this.row >= check.row - 1) {
 			if (this.col <= check.col + 1 && this.col >= check.col - 1) {
@@ -82,7 +74,7 @@ public class Coordinates {
 				(this.getRow() < 0 || this.getCol() < 0) || (this.getRow() >= 8 || this.getCol() >= 8));
 	}
 	
-	//Consider diagonal distances to give the distance between two coordinates using the Pythagorean Theorem.
+	//Considers diagonal distances to give the distance between two coordinates using the Pythagorean Theorem.
 	public int calculateDistance(Coordinates piece) {
 		int xDist = piece.row - this.row, yDist = piece.col - this.col;
 		int xDisplacement = xDist * xDist, yDisplacement = yDist * yDist;
@@ -90,7 +82,7 @@ public class Coordinates {
 		return (int) Math.sqrt(distSq);
 	}
 	
-	//Prints out the character of the column number and th row number
+	//Prints out the character of the column number and the row number
 	public String toString() {
 		return (Character.toString((char)(this.col + 'a')) + Character.toString((char)(this.row + '1')));
 	}
