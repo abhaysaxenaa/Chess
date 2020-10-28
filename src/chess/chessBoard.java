@@ -82,6 +82,7 @@ public class chessBoard {
 				this.chessboard[curRank][curFile] = new Square(curRank, curFile, newPiece);
 			}
 	}
+	
 		
 		//USE THIS CONSTRUCTOR INSTEAD
 		
