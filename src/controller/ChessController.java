@@ -1,7 +1,6 @@
 package controller;
 
 import chess.chessBoard;
-
 import chess.chessBoard.Square;
 import pieces.*;
 import chess.Coordinates;
@@ -13,26 +12,12 @@ public class ChessController {
 	private chessBoard chessboard;
 	private String currPlayer;
 	public boolean hasEnded;
-	public boolean isResign;
-	public boolean isWhiteWinner;
-	public boolean isWhiteMove;
-	public boolean isDrawOption;
-	public boolean isCheck;
-	public boolean isWhiteCheck;
-	public boolean isBlackCheck;
 	
 	//Constructor Call
 	public ChessController() {
 		this.chessboard = new chessBoard();
 		this.hasEnded = false;
 		this.currPlayer = "White";
-		this.isResign = false; 
-		this.isWhiteWinner = false;
-		this.isWhiteMove = true;
-		this.isDrawOption = false;
-		this.isCheck = false;
-		this.isWhiteCheck = false;
-		this.isBlackCheck = false;
 	}
 	
 	//Return chessBoard instance.
@@ -42,12 +27,7 @@ public class ChessController {
 	
 	public void makeMove(Coordinates curr, Coordinates end, ChessPiece promote) {
 		
-		if (curr.getRow() == end.getRow() && curr.getCol() == end.getCol()) {
-			
-			System.out.println("Illegal move, try again");
-			return;
-			
-		} else {
+		if (curr.getRow() != end.getRow() && curr.getCol() != end.getCol()) {
 			
 			int row = curr.getRow(), col = curr.getCol();
 			int finalrow = end.getRow(), finalcol = end.getCol();
@@ -82,12 +62,15 @@ public class ChessController {
 				System.out.println("Illegal move, try again");
 			}
 			
-		}
+		} else {
+			System.out.println("Illegal move, try again");
+			return;
+		} 
 	}
 	
 	public boolean checkPath(Coordinates curr, Coordinates end) {
 		
-		int row = curr.getRow(), col = curr.getCol(), finalRow = end.getRow(), finalCol = end.getCol();
+int row = curr.getRow(), col = curr.getCol(), finalRow = end.getRow(), finalCol = end.getCol();
 		
 		//Checks if there is any other piece vertical to the coordinates.
 		if (curr.getCol() == end.getCol()) {
@@ -180,7 +163,7 @@ public class ChessController {
 		return false;
 	}
 	
-	public boolean checkOnKing() {
+	private boolean checkOnKing() {
 		
 		for (int i = 0; i <= 7; i++)
 			for (int j = 0; j <= 7; j++) {

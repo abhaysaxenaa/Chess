@@ -86,7 +86,6 @@ public class chessBoard {
 				
 				this.chessboard[i][j] = new Square(i, j, createPiece);
 			}
-			
 		}
 		
 		//USE THIS CONSTRUCTOR INSTEAD
@@ -133,7 +132,7 @@ public class chessBoard {
 
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				boardPrint += this.chessboard[i][j].toString() + " ";
+				boardPrint += this.chessboard[i][j].printSquare() + " ";
 			}
 
 			boardPrint += (i * -1 + 8) + "\n";

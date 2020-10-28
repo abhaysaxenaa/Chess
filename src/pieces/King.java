@@ -1,7 +1,6 @@
 package pieces;
 
 import java.util.ArrayList;
-
 import chess.Coordinates;
 
 public class King extends ChessPiece{
@@ -16,13 +15,12 @@ public class King extends ChessPiece{
 		return super.getPlayerColor();
 	}
 	
-	public boolean checkValidity(Coordinates curr, Coordinates end /*SpecialCase*/) {
-		if (curr.calculateDistance(end) > 8 || (curr.getRow() < 0 || curr.getCol() < 0) && (curr. adjacencyCheck(end))) {
-			return false;
-		} else {
+	public boolean checkValidity(Coordinates curr, Coordinates end, Case specialCase) {
+		if (curr.calculateDistance(end) <= 7 && curr.checkBoardLimits(end) && curr.adjacencyCheck(end)) {
 			return true;
+		} else {
+			return false;
 		}
-		//&& start.isAdjacentTo(end);
 	}
 	
 	public ArrayList<Coordinates> pieceMoveList() {

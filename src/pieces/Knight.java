@@ -1,7 +1,6 @@
 package pieces;
 
 import java.util.ArrayList;
-
 import chess.Coordinates;
 
 public class Knight extends ChessPiece{
@@ -16,26 +15,29 @@ public class Knight extends ChessPiece{
 		return super.getPlayerColor();
 	}
 	
-	public boolean checkValidity(Coordinates curr, Coordinates end /*SpecialCase*/) {
-		
-		if (curr.calculateDistance(end) > 8 || (curr.getRow() < 0 || curr.getCol() < 0) && !(curr. adjacencyCheck(end))) {
-			return false;
+	public boolean checkValidity(Coordinates curr, Coordinates end, Case specialCase) {
+		if (curr.calculateDistance(end) <= 8 && curr.checkBoardLimits(end)) {
+			if (knightCondition(curr, end)) {
+				return true;
+			} else {
+				return false;
+			}
 		}
-		else {int row = curr.getRow(), currFile = curr.getCol(), endRank = end.getRow(),
-				endFile = end.getCol();
-
-		if (row + 2 == endRank || row - 2 == endRank)
-			return currFile + 1 == endFile || currFile - 1 == endFile;
-		else if (currFile + 2 == endFile || currFile - 2 == endFile)
-			return row + 1 == endRank || row - 1 == endRank;
-			return true;
-		}
-		
-		//&& curr.isAdjacentTo(end);
+		return false;
 	}
 	
+	private boolean knightCondition(Coordinates curr, Coordinates end) {
+		if (curr.getRow() + 2 == end.getRow() || curr.getRow() - 2 == end.getRow()) {
+			return (curr.getCol() + 1 == end.getCol() || curr.getCol() - 1 == end.getCol()) ? true : false;
+		} else if (curr.getCol() + 2 == end.getCol() || curr.getCol() - 2 == end.getCol()) {
+			return (curr.getRow() + 1 == end.getRow() || curr.getRow() - 1 == end.getRow()) ? true : false;
+		}
+		return false;
+	}
+
 	public ArrayList<Coordinates> pieceMoveList() {
 		return null;
+		//ArrayList<Coordinates> farthestMoves = new ArrayList<Coordinates>();
 	}
 	
 	public String printPiece() {

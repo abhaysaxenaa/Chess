@@ -1,7 +1,11 @@
+/**
+ * @author Abhay Saxena (ans192)
+ * @author Venkata Sai Karthik Gandrath (vg311)
+ */
+
 package pieces;
 
 import java.util.ArrayList;
-
 
 import chess.Coordinates;
 
@@ -18,13 +22,12 @@ public class Bishop extends ChessPiece{
 		return super.getPlayerColor();
 	}
 	
-	public boolean checkValidity(Coordinates curr, Coordinates end /*SpecialCase*/) {
-		if (curr.calculateDistance(end) > 8 || (curr.getRow() < 0 || curr.getCol() < 0)) {
-			return false;
-		} else {
+	public boolean checkValidity(Coordinates curr, Coordinates end, Case specialCase) {
+		if (curr.calculateDistance(end) <= 7 && !curr.checkBoardLimits(end) && curr.diagonalCheck(end)) {
 			return true;
+		} else {
+			return false;
 		}
-		//&& !specialCases.pieceInPath && start.isDiagonalTo(end)
 	}
 	
 	public ArrayList<Coordinates> pieceMoveList() {

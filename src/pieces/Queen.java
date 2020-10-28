@@ -16,7 +16,7 @@ public class Queen extends ChessPiece{
 		return super.getPlayerColor();
 	}
 	
-	public boolean checkValidity(Coordinates curr, Coordinates end /*SpecialCase*/) {
+	public boolean checkValidity(Coordinates curr, Coordinates end, Case specialCase) {
 		if (curr.calculateDistance(end) > 8 || (curr.getRow() < 0 || curr.getCol() < 0)) {
 			return false;
 		} else {

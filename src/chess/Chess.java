@@ -19,7 +19,7 @@ public class Chess {
 		while (chessController.hasEnded == false) {
 			chessgame.drawCurrBoard();
 			chessgame.printNext();
-			chessgame.parseInput(null);
+			chessgame.getInput();
 		}
 		
 		String currPlayer = chessController.getcurrPlayer();

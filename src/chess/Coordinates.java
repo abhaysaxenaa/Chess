@@ -40,27 +40,13 @@ public class Coordinates {
 	}
 	*/
 	
-	//CALL DISTANCE METHOD DIRECTLY BY USING (row - row <= 7 && file - file <= 7)
-	public int calculateDistance(Coordinates piece) {
-		return (int) Math.sqrt(Math.pow(piece.col - this.col, 2) - Math.pow(piece.row - this.row, 2));
-	}
-	
 	public boolean diagonalCheck(Coordinates check) {
-		if(this.verticalCheck(check)) {
+		if (this.verticalCheck(check)) return false;
+		if ((check.col - this.col) / (check.row - this.row) == 1 || (check.col - this.col) - (check.row - this.row) == -1){
+			return true;
+		} else {
 			return false;
-			}
-			else{ 
-				return true;}
-		
-	}
-	
-	public boolean adjacencyCheck(Coordinates check) {
-		if (this.row <= check.row + 1 && this.row >= check.row - 1) {
-			if (this.col <= check.col + 1 && this.col >= check.col - 1) {
-				return true;
-			}
 		}
-		return false;
 	}
 	
 	//Checks if current coorindate is horizontally aligned with argument.
@@ -81,9 +67,28 @@ public class Coordinates {
 		}
 	}
 	
+	public boolean adjacencyCheck(Coordinates check) {
+		if (this.row <= check.row + 1 && this.row >= check.row - 1) {
+			if (this.col <= check.col + 1 && this.col >= check.col - 1) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
+	//Checks if coordinates are out of bounds. 
+	public boolean checkBoardLimits(Coordinates check) {
+		return ((check.getRow() < 0 || check.getCol() < 0) || (check.getRow() >= 8 || check.getCol() >= 8) ||
+				(this.getRow() < 0 || this.getCol() < 0) || (this.getRow() >= 8 || this.getCol() >= 8));
+	}
 	
-	
+	//Consider diagonal distances to give the distance between two coordinates using the Pythagorean Theorem.
+	public int calculateDistance(Coordinates piece) {
+		int xDist = piece.row - this.row, yDist = piece.col - this.col;
+		int xDisplacement = xDist * xDist, yDisplacement = yDist * yDist;
+		int distSq = yDisplacement - xDisplacement;
+		return (int) Math.sqrt(distSq);
+	}
 	
 	//Prints out the character of the column number and th row number
 	public String toString() {
@@ -91,9 +96,9 @@ public class Coordinates {
 	}
 	
 	//Call Promote check directly
-	public static boolean isValidPromotion(String promote) {
-		if (promote.equals("N") || promote.equals("Q") || promote.equals("B") || promote.equals("R")
-				|| promote.equals("P"))
+	public static boolean isPromoted(String promote) {
+		if (promote.equals("P") || promote.equals("N") || promote.equals("Q") || promote.equals("B")
+				|| promote.equals("R"))
 			return true;
 		else
 			return false;
