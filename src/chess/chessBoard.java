@@ -40,7 +40,7 @@ public class chessBoard {
 			return this.coordinate.getCol();
 		}
 		
-		public String printSquare() {
+		/*public String printSquare() {
 			if (this.currPiece != null) {
 				return this.currPiece.printPiece();
 			} else {
@@ -49,6 +49,16 @@ public class chessBoard {
 				 } else {
 					 return "##";
 				 }
+			}
+		}*/
+		
+		public String printSquare() {
+			if (this.currPiece != null) {
+				return this.currPiece.printPiece();
+			} else if ((this.getRow() % 2 == 0 && this.getCol() % 2 == 0) || (this.getRow() % 2 != 0 && this.getCol() % 2 != 0)) {
+					return "  ";
+			} else {
+					return "##";
 			}
 		}
 	}
