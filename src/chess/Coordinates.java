@@ -40,8 +40,27 @@ public class Coordinates {
 	}
 	*/
 	
+	//CALL DISTANCE METHOD DIRECTLY BY USING (row - row <= 7 && file - file <= 7)
+	public int calculateDistance(Coordinates piece) {
+		return (int) Math.sqrt(Math.pow(piece.col - this.col, 2) - Math.pow(piece.row - this.row, 2));
+	}
+	
 	public boolean diagonalCheck(Coordinates check) {
-		return this.verticalCheck(check) ? false : true;
+		if(this.verticalCheck(check)) {
+			return false;
+			}
+			else{ 
+				return true;}
+		
+	}
+	
+	public boolean adjacencyCheck(Coordinates check) {
+		if (this.row <= check.row + 1 && this.row >= check.row - 1) {
+			if (this.col <= check.col + 1 && this.col >= check.col - 1) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	//Checks if current coorindate is horizontally aligned with argument.
@@ -62,19 +81,9 @@ public class Coordinates {
 		}
 	}
 	
-	public boolean adjacencyCheck(Coordinates check) {
-		if (this.row <= check.row + 1 && this.row >= check.row - 1) {
-			if (this.col <= check.col + 1 && this.col >= check.col - 1) {
-				return true;
-			}
-		}
-		return false;
-	}
 	
-	//CALL DISTANCE METHOD DIRECTLY BY USING (row - row <= 7 && file - file <= 7)
-	public int calculateDistance(Coordinates piece) {
-		return (int) Math.sqrt(Math.pow(piece.col - this.col, 2) - Math.pow(piece.row - this.row, 2));
-	}
+	
+	
 	
 	//Prints out the character of the column number and th row number
 	public String toString() {

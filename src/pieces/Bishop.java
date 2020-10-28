@@ -2,6 +2,7 @@ package pieces;
 
 import java.util.ArrayList;
 
+
 import chess.Coordinates;
 
 

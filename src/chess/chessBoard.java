@@ -86,6 +86,7 @@ public class chessBoard {
 				
 				this.chessboard[i][j] = new Square(i, j, createPiece);
 			}
+			
 		}
 		
 		//USE THIS CONSTRUCTOR INSTEAD

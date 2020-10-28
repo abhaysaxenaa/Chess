@@ -17,7 +17,7 @@ public class King extends ChessPiece{
 	}
 	
 	public boolean checkValidity(Coordinates curr, Coordinates end /*SpecialCase*/) {
-		if (curr.calculateDistance(end) > 8 || (curr.getRow() < 0 || curr.getCol() < 0)) {
+		if (curr.calculateDistance(end) > 8 || (curr.getRow() < 0 || curr.getCol() < 0) && (curr. adjacencyCheck(end))) {
 			return false;
 		} else {
 			return true;

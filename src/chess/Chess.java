@@ -16,13 +16,13 @@ public class Chess {
 		 * Print prompt
 		 * Take in an input
 		*/
-		while (chessController.hasEnded() == false) {
+		while (chessController.hasEnded == false) {
 			chessgame.drawCurrBoard();
 			chessgame.printNext();
-			chessgame.getInput();
+			chessgame.parseInput(null);
 		}
 		
-		String currPlayer = chessController.getCurrPlayer();
+		String currPlayer = chessController.getcurrPlayer();
 		if (currPlayer.equals("w")) {
 			System.out.println("White wins.");
 		} else {

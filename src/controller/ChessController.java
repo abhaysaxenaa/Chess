@@ -1,6 +1,7 @@
 package controller;
 
 import chess.chessBoard;
+
 import chess.chessBoard.Square;
 import pieces.*;
 import chess.Coordinates;
@@ -12,12 +13,26 @@ public class ChessController {
 	private chessBoard chessboard;
 	private String currPlayer;
 	public boolean hasEnded;
+	public boolean isResign;
+	public boolean isWhiteWinner;
+	public boolean isWhiteMove;
+	public boolean isDrawOption;
+	public boolean isCheck;
+	public boolean isWhiteCheck;
+	public boolean isBlackCheck;
 	
 	//Constructor Call
 	public ChessController() {
 		this.chessboard = new chessBoard();
 		this.hasEnded = false;
 		this.currPlayer = "White";
+		this.isResign = false; 
+		this.isWhiteWinner = false;
+		this.isWhiteMove = true;
+		this.isDrawOption = false;
+		this.isCheck = false;
+		this.isWhiteCheck = false;
+		this.isBlackCheck = false;
 	}
 	
 	//Return chessBoard instance.
@@ -77,17 +92,22 @@ public class ChessController {
 		//Checks if there is any other piece vertical to the coordinates.
 		if (curr.getCol() == end.getCol()) {
 			if (row < finalRow) {
-				for (int i = row; i < finalRow; i++) {
+				int i = row;
+				while(i < finalRow){
 					if (this.chessboard.getcurrSquare(i, col) != null) {
 						return true;
 					}
+					i++;
 				}
 				return false;
 			}
-			for (int i = finalRow; i > row; i--) {
+			
+			int i = finalRow;
+			while(i>row) {
 				if (this.chessboard.getcurrSquare(i, col) != null) {
-					return true;
+					return true;	
 				}
+				i--;
 			}
 			return false;
 		}
@@ -95,17 +115,24 @@ public class ChessController {
 		//Horizontal Check.
 		if (curr.getRow() == end.getRow()) {
 			if (col < finalCol) {
-				for (int i = col; i < finalCol; i++) {
-					if (this.chessboard.getcurrSquare(row, i) != null) {
+			
+				int j = col;
+				while(j<finalCol){
+					if (this.chessboard.getcurrSquare(row, j) != null) {
 						return true;
+						
 					}
+					j++;
 				}
 				return false;
 			}
-			for (int i = finalCol; i > col; i--) {
-				if (this.chessboard.getcurrSquare(row, i) != null) {
+			int k = finalCol;
+			while (k > col){
+				if (this.chessboard.getcurrSquare(row, k) != null) {
 					return true;
+					
 				}
+				k--;
 			}
 			return false;
 		}
@@ -117,12 +144,14 @@ public class ChessController {
 			} else {
 				int i = finalRow > row ? 1 : -1, j = finalCol > col ? 1 : -1;
 				
-				for (int itrRow = row + i; itrRow != finalRow; itrRow = itrRow + i) {
-					for (int itrCol = col + j; itrCol != finalCol; itrCol = itrCol = itrCol + j) {
+					int itrRow = row + i; 
+					while(itrRow != finalRow){
+					for (int itrCol = col + j; itrCol != finalCol; itrCol = itrCol + j) {
 						if (this.chessboard.getcurrSquare(itrRow, itrCol).getcurrPiece() != null){
 							return true;
 						}
 					}
+					itrRow = itrRow + i;
 				}
 			}
 		}
@@ -139,16 +168,19 @@ public class ChessController {
 		ArrayList<Coordinates> pieceMove = currPiece.pieceMoveList(curr);
 		
 		if (pieceMove != null) {
-			for (int i = 0; i < pieceMove.size(); i++) {
+			 
+			int i = 0;
+			while(i < pieceMove.size()){
 				if (this.directCheck(curr, pieceMove.get(i))) {
 					return true;
 				}
+				i++;
 			}
 		}
 		return false;
 	}
 	
-	private boolean checkOnKing() {
+	public boolean checkOnKing() {
 		
 		for (int i = 0; i <= 7; i++)
 			for (int j = 0; j <= 7; j++) {
@@ -165,7 +197,9 @@ public class ChessController {
 		
 		if (curr.getCol() == end.getCol()) {
 			
-			for (int i = curr.getRow()+1; i < end.getRow(); i++) {
+			
+			int i = curr.getRow()+1;
+			while(i < end.getRow()){
 				Square check = this.chessboard.getcurrSquare(i, curr.getCol());
 				if (check != null) {
 					if (check.getcurrPiece() instanceof King) {
@@ -174,10 +208,14 @@ public class ChessController {
 						return false;
 					}
 				}
+				i++;
 			}
-		} else if (curr.getRow() == end.getCol()) {
+		} 
+		else if (curr.getRow() == end.getCol()) {
 			
-			for (int i = curr.getCol()+1; i < end.getCol(); i++) {
+		
+			int i = curr.getCol()+1;
+			while(i < end.getCol()){
 				Square check = this.chessboard.getcurrSquare(curr.getRow(), i);
 				if (check != null) {
 					if (check.getcurrPiece() instanceof King) {
@@ -186,6 +224,7 @@ public class ChessController {
 						return false;
 					}
 				}
+				i++;
 			}
 		} else if (curr.diagonalCheck(end)) {
 			
