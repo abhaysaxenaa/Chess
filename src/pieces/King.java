@@ -5,8 +5,6 @@ import chess.Coordinates;
 
 public class King extends ChessPiece{
 	
-	private String color;
-	
 	public King(String color) {
 		super(color);
 	}
@@ -16,22 +14,18 @@ public class King extends ChessPiece{
 	}
 	
 	public boolean checkValidity(Coordinates curr, Coordinates end, Case specialCase) {
-		if (curr.calculateDistance(end) <= 7 && curr.checkBoardLimits(end) && curr.adjacencyCheck(end)) {
+		if (curr.calculateDistance(end) <= 7 && !curr.checkBoardLimits(end) && curr.adjacencyCheck(end)) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 	
-	public ArrayList<Coordinates> pieceMoveList() {
+	public ArrayList<Coordinates> pieceMoveList(Coordinates curr) {
 		return null;
 	}
 	
 	public String printPiece() {
-		if (this.color.equals("White")) {
-			return "wK";
-		} else {
-			return "bK";
-		}
+		return super.printPiece() + "K";
 	}
 }

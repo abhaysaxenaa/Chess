@@ -1,4 +1,4 @@
-package chess;
+ package chess;
 
 import pieces.*;
 import chess.Coordinates;
@@ -42,7 +42,7 @@ public class chessBoard {
 		
 		public String printSquare() {
 			if (this.currPiece != null) {
-				return this.currPiece.toString();
+				return this.currPiece.printPiece();
 			} else {
 				 if (this.getRow() + this.getCol() % 2 == 0 || this.getRow() + this.getCol() % 2 != 0) {
 					 return " ";
@@ -56,37 +56,32 @@ public class chessBoard {
 	private Square[][] chessboard;
 	
 	public chessBoard() {
-		
 		this.chessboard = new Square[8][8];
-		String playerColor;
-		ChessPiece createPiece = null;
-		
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
-				
-				if (i == 0 || i == 7) {
-					
-					playerColor = i == 0 ? "Black" : "White";
-					
-					if (j == 3) {
-						createPiece = new Queen(playerColor);
-					} else if (j == 2 || j == 5) {
-						createPiece = new Bishop(playerColor);
-					} else if (j == 1 || j == 6) {
-						createPiece = new Knight(playerColor);
-					} else if (j == 0 || j == 7) {
-						createPiece = new Rook(playerColor);
-					} else {
-						createPiece = new King(playerColor);
-					}
-				} else if (i == 1 || i == 6) {
-					playerColor = i == 0 ? "Black" : "White";
-					createPiece = new Pawn(playerColor);
-				}
-				
-				this.chessboard[i][j] = new Square(i, j, createPiece);
+		String pieceColor = null;
+
+		for (int curRank = 0; curRank < 8; curRank++)
+			for (int curFile = 0; curFile < 8; curFile++) {
+				ChessPiece newPiece = null;
+
+				if (curRank == 0 || curRank == 7) { // initialize non-pawns
+					pieceColor = curRank == 0 ? "Black" : "White";
+
+					if (curFile == 0 || curFile == 7)
+						newPiece = new Rook(pieceColor);
+					else if (curFile == 1 || curFile == 6)
+						newPiece = new Knight(pieceColor);
+					else if (curFile == 2 || curFile == 5)
+						newPiece = new Bishop(pieceColor);
+					else if (curFile == 3)
+						newPiece = new Queen(pieceColor);
+					else
+						newPiece = new King(pieceColor);
+				} else if (curRank == 1 || curRank == 6) // initialize pawns
+					newPiece = new Pawn(curRank == 1 ? "Black" : "White");
+
+				this.chessboard[curRank][curFile] = new Square(curRank, curFile, newPiece);
 			}
-		}
+	}
 		
 		//USE THIS CONSTRUCTOR INSTEAD
 		
@@ -112,7 +107,6 @@ public class chessBoard {
                 new Knight("Black"), new Rook("Black") } };
                 
         }*/
-	}
 	
 	public Square getcurrSquare(Coordinates coordinate) {
 		return this.chessboard[coordinate.getRow()][coordinate.getCol()];

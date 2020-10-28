@@ -5,8 +5,6 @@ import chess.Coordinates;
 
 public class Knight extends ChessPiece{
 	
-	private String color;
-	
 	public Knight(String color) {
 		super(color);
 	}
@@ -35,16 +33,72 @@ public class Knight extends ChessPiece{
 		return false;
 	}
 
-	public ArrayList<Coordinates> pieceMoveList() {
-		return null;
-		//ArrayList<Coordinates> farthestMoves = new ArrayList<Coordinates>();
+	public ArrayList<Coordinates> pieceMoveList(Coordinates curr) {
+		
+		int X[] = { 2, 1, -1, -2, -2, 0, 1, 2 };
+		int Y[] = { 1, 2, 2, 1, -1, 0, -2, -1 };
+		
+		ArrayList<Coordinates> pieceMove = new ArrayList<Coordinates>();
+		//int currRow = curr.getRow(), currCol = curr.getCol();
+		//int Rank = currRow + 2, File = currCol + 1;
+		
+		for (int i = 0; i <= 7; i++) {
+			int currRow = curr.getRow() + X[i], currCol = curr.getCol() + Y[i];
+			if (currRow < 8 && currRow >= 0 && currCol < 8 && currCol >= 0) {
+				pieceMove.add(new Coordinates(currRow, currCol));
+			}
+		}
+		
+		
+		/*if (Rank < 8 && Rank >= 0 && File < 8 && File >= 0)
+			pieceMove.add(new Coordinates(Rank, File));
+
+		Rank = currRow - 2;
+		File = currCol + 1;
+
+		if (Rank < 8 && Rank > 0 && File < 8 && File >= 0)
+			pieceMove.add(new Coordinates(Rank, File));
+
+		Rank = currRow + 2;
+		File = currCol - 1;
+
+		if (Rank < 8 && Rank > 0 && File < 8 && File >= 0)
+			pieceMove.add(new Coordinates(Rank, File));
+
+		Rank = currRow - 2;
+		File = currCol - 1;
+
+		if (Rank < 8 && Rank >= 0 && File < 8 && File >= 0)
+			pieceMove.add(new Coordinates(Rank, File));
+
+		Rank = currRow + 1;
+		File = currCol + 2;
+
+		if (Rank < 8 && Rank >= 0 && File < 8 && File >= 0)
+			pieceMove.add(new Coordinates(Rank, File));
+
+		Rank = currRow - 1;
+		File = currCol + 2;
+
+		if (Rank < 8 && Rank >= 0 && File < 8 && File >= 0)
+			pieceMove.add(new Coordinates(Rank, File));
+
+		Rank = currRow + 1;
+		File = currCol - 2;
+
+		if (Rank < 8 && Rank >= 0 && File < 8 && File >= 0)
+			pieceMove.add(new Coordinates(Rank, File));
+
+		Rank = 0;
+		File = 0;
+
+		if (Rank < 8 && Rank >= 0 && File < 8 && File >= 0)
+			pieceMove.add(new Coordinates(Rank, File));*/
+
+		return pieceMove;
 	}
 	
 	public String printPiece() {
-		if (this.color.equals("White")) {
-			return "wN";
-		} else {
-			return "bN";
-		}
+		return super.printPiece() + "N";
 	}
 }

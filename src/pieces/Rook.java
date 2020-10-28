@@ -1,12 +1,9 @@
 package pieces;
 
 import java.util.ArrayList;
-
 import chess.Coordinates;
 
 public class Rook extends ChessPiece{
-	
-	private String color;
 	
 	public Rook(String color) {
 		super(color);
@@ -17,12 +14,11 @@ public class Rook extends ChessPiece{
 	}
 	
 	public boolean checkValidity(Coordinates curr, Coordinates end, Case specialCase) {
-		if (curr.calculateDistance(end) > 8 || (curr.getRow() < 0 || curr.getCol() < 0)) {
-			return false;
-		} else {
+		if (super.checkValidity(curr, end, specialCase) && rookConditionCheck(curr, end, specialCase)) {
 			return true;
+		} else {
+			return false;
 		}
-		//&& !specialCases.pieceInPath && (start.isHorizontalTo(end) || start.isVerticalTo(end));
 	}
 	
 	public ArrayList<Coordinates> pieceMoveList(Coordinates start) {
@@ -36,11 +32,11 @@ public class Rook extends ChessPiece{
 		return pieceMove;
 	}
 	
+	public boolean rookConditionCheck(Coordinates curr, Coordinates end, Case specialCase) {
+		return (!specialCase.pieceInPath && ((curr.getRow() == end.getRow()) || (curr.getCol() == end.getCol())));
+	}
+	
 	public String printPiece() {
-		if (this.color.equals("White")) {
-			return "wR";
-		} else {
-			return "bR";
-		}
+		return super.printPiece() + "R";
 	}
 }

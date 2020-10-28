@@ -1,6 +1,5 @@
 package controller;
 
-import java.awt.Color;
 import java.util.Scanner;
 import controller.ChessController;
 import pieces.*;

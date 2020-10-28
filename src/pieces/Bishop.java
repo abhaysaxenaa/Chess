@@ -12,8 +12,6 @@ import chess.Coordinates;
 
 public class Bishop extends ChessPiece{
 	
-	private String color;
-	
 	public Bishop(String color) {
 		super(color);
 	}
@@ -30,16 +28,12 @@ public class Bishop extends ChessPiece{
 		}
 	}
 	
-	public ArrayList<Coordinates> pieceMoveList() {
+	public ArrayList<Coordinates> pieceMoveList(Coordinates curr) {
 		return null;
 	}
 	
 	public String printPiece() {
-		if (this.color.equals("White")) {
-			return  "wB";
-		} else {
-			return "bB";
-		}
+		return super.printPiece() + "B";
 	}
 	
 }

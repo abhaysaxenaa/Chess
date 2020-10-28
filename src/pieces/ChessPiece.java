@@ -27,17 +27,7 @@ public class ChessPiece {
 		} else {
 			return true;
 		}
-	}
-	
-	//Additional checks for each individual pieces:
-	/*protected boolean knightCondition(Coordinates curr, Coordinates end) {
-		if (curr.getRow() + 2 == end.getRow() || curr.getRow() - 2 == end.getRow()) {
-			return (curr.getCol() + 1 == end.getCol() || curr.getCol() - 1 == end.getCol()) ? true : false;
-		} else if (curr.getCol() + 2 == end.getCol() || curr.getCol() - 2 == end.getCol()) {
-			return (curr.getRow() + 1 == end.getRow() || curr.getRow() - 1 == end.getRow()) ? true : false;
-		}
-		return false;
-	}*/ 
+	} 
 	
 	public ArrayList<Coordinates> pieceMoveList(Coordinates start) {
 		return null;
