@@ -1,3 +1,9 @@
+/**
+ * @author Abhay Saxena (ans192)
+
+ * @author Venkata Sai Karthik Gandrath (vg311)
+ */
+
 package chess;
 
 import controller.ChessController;

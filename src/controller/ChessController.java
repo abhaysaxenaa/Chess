@@ -1,3 +1,9 @@
+/**
+ * @author Abhay Saxena (ans192)
+
+ * @author Venkata Sai Karthik Gandrath (vg311)
+ */
+
 package controller;
 
 import chess.chessBoard;
@@ -21,12 +27,32 @@ public class ChessController {
 	}
 	
 	//Return chessBoard instance.
+	/**
+	 * @return the board
+	 */
 	public chessBoard getBoard() {
 		return this.chessboard;
 	}
 	
+	/*
+	 * @return current player as string 
+	 */
+	//Returns a string of the current player.
+	public String getcurrPlayer() {
+		return this.currPlayer;
+	}
+	
 	/*Moves the piece from the current coordinate to the end coordinate after a series of checks. Also
 	 * accepts a potential promotion if it is passed (and is not null). Also checks for a check, or a final checkmate.
+	 *  @param curr 
+	 *  (type Coordinates)  the current coordinate of the piece
+	 * 	
+	 * @param end 
+	 * (type Coordinates) the final coordinate of the piece to be moved
+	 * 
+	 * 	@param promotion
+	 *  (type chesspiece)  condition for the piece to be promoted 
+	 *            
 	 */
 	public void makeMove(Coordinates curr, Coordinates end, ChessPiece promote) {
 		
@@ -38,16 +64,26 @@ public class ChessController {
 			ChessPiece endPiece = this.chessboard.getcurrSquare(finalrow, finalcol).getcurrPiece();
 			
 			/*IMPLEMENT YOUR METHOD HERE*/
-			Case specialCases = new Case();
-			specialCases.isCapturing = endPiece == null ? false : true;
-			specialCases.isPromoting = promote == null ? false : true;
-			specialCases.pieceInPath = this.checkPath(curr, end);
+			Case exceptionalCases = new Case();
+			if( endPiece == null) {
+				exceptionalCases.isCapturing = false;
+			}
+			else {
+				exceptionalCases.isCapturing = true;
+			}
+			if(promote == null) {
+				exceptionalCases.isPromoting = false;
+			}
+			else {
+				exceptionalCases.isPromoting = true;
+			}
+			exceptionalCases.isInPath = this.checkPath(curr, end);
 			
-			if (currPiece == null || currPiece.getPlayerColor().equals(endPiece.getPlayerColor()) || (endPiece != null && endPiece.getPlayerColor().equals(currPiece.getPlayerColor()))){
+			if (currPiece == null || !currPiece.getPlayerColor().equals(endPiece.getPlayerColor()) || (endPiece != null && endPiece.getPlayerColor().equals(currPiece.getPlayerColor()))){
 				System.out.println("Illegal move, try again");
 				return;
-			} else if (currPiece.checkValidity(curr, end, specialCases)) {
-				if (currPiece instanceof Pawn && specialCases.canPromote) {
+			} else if (currPiece.checkValidity(curr, end, exceptionalCases)) {
+				if (currPiece instanceof Pawn && exceptionalCases.isPromote) {
 					this.chessboard.getcurrSquare(end.getRow(), end.getCol()).setcurrPiece(promote);
 				} else {
 					this.chessboard.getcurrSquare(end.getRow(), end.getCol()).setcurrPiece(currPiece);
@@ -71,6 +107,24 @@ public class ChessController {
 		} 
 	}
 	
+	//Flips the current player to the other player, used for spontaneous switching for certain special cases.
+		public void flipPlayers() {
+			if (this.currPlayer.equals("White")) {
+				this.currPlayer = "Black";
+			} else {
+				this.currPlayer = "White";
+			}
+		}
+	/*
+	 * * @param curr 
+	 *  current coordinate of the square for piece
+	 *            
+	 * @param end
+	 *   final coordinate of the square for piece to be moved
+	 * 
+	 * @return boolean 
+	 * 
+	 */
 	//Checks if there is any piece in between the current and end coordinate for the makeMove method to operate.
 	public boolean checkPath(Coordinates curr, Coordinates end) {
 		
@@ -148,6 +202,17 @@ public class ChessController {
 	}
 	
 	//Checks if a given coordinate is in collision with a King piece.
+	/**
+	 * Checks if a piece at a given rank and file is colliding with the king
+	 * 
+	 * @param row 
+	 * (type int) row 
+	 *            
+	 * @param col 
+	 * (type int) column
+	 *             
+	 * @return Boolean 
+	 */
 	public boolean possibleCheck(int row, int col) {
 		
 		ChessPiece currPiece = this.chessboard.getcurrSquare(row, col).getcurrPiece();
@@ -168,6 +233,9 @@ public class ChessController {
 	}
 	
 	//Checks if a King piece is currently in a 'Check'.
+	/*
+	 * @return boolean 
+	 */
 	private boolean checkOnKing() {
 		
 		for (int i = 0; i <= 7; i++)
@@ -181,6 +249,15 @@ public class ChessController {
 	}
 	
 	//Condition Check: If a King piece is the primary collision for two coordinates.
+	/*
+	 * @param curr
+	 *  current coordinate
+	 * 
+	 * @param end  
+ 	 *final coordinate 
+	 * 
+	 * @return boolean 
+	 */
 	public boolean directCheck(Coordinates curr, Coordinates end) {
 		
 		if (curr.getCol() == end.getCol()) {
@@ -234,18 +311,10 @@ public class ChessController {
 		return false;
 	}
 	
-	//Returns a string of the current player.
-	public String getcurrPlayer() {
-		return this.currPlayer;
-	}
 	
-	//Flips the current player to the other player, used for spontaneous switching for certain special cases.
-	public void flipPlayers() {
-		if (this.currPlayer.equals("White")) {
-			this.currPlayer = "Black";
-		} else {
-			this.currPlayer = "White";
-		}
-	}
+	
+
+	
+	
 	
 }

@@ -1,4 +1,11 @@
- package chess;
+ 
+/**
+ * @author Abhay Saxena (ans192)
+
+ * @author Venkata Sai Karthik Gandrath (vg311)
+ */
+
+package chess;
 
 import pieces.*;
 import chess.Coordinates;
@@ -10,67 +17,124 @@ public class chessBoard {
 		private Coordinates coordinate;
 		private ChessPiece currPiece;
 		
+		/*
+		 * @param row
+		 * (type: int) row 
+		 * @param col
+		 * (type: int) column
+		 *            
+		 * @param currPiece
+		 * The piece thats on the square.
+		 *            
+		 *
+		 */
 		public Square(int row, int col, ChessPiece currPiece) {
 			this.coordinate = new Coordinates(row, col);
 			this.currPiece = currPiece;
 		}
 		
+		/*
+		 * @param row
+		 *(type: Char) row of square
+		 *            
+		 * @param col
+		 * (type: Char) column of square
+		 *            
+		 * @param currPiece
+		 * The piece thats on the square.
+		 *            
+		 *
+		 */
 		public Square(char row, char col, ChessPiece currPiece) {
 			this.coordinate = new Coordinates(row, col);
 			this.currPiece = currPiece;
 		}
 		
+
+		/**
+		 * 
+		 * @return ChessPiece 
+		 */
 		public ChessPiece getcurrPiece() {
 			return this.currPiece;
 		}
+		
+		/**
+
+		 * 
+		 * @param newPiece
+		 *  sets the current piece  
+		 */
 		
 		public void setcurrPiece(ChessPiece newPiece) {
 			this.currPiece = newPiece;
 		}
 		
+		/**
+		 * 
+		 * @return Coordinates
+		 * returns the coordinates for the pieces to be set
+		 */
 		public Coordinates getCoordinates() {
 			return this.coordinate;
 		}
 		
+		/**
+		 * 
+		 * @return int
+		 * returns the row for the pieces to be set
+		 */
 		public int getRow() {
 			return this.coordinate.getRow();
 		}
 		
+		/**
+		 * 
+		 * @return int
+		 *  returns the column for the pieces to be set
+		 */
 		public int getCol() {
 			return this.coordinate.getCol();
 		}
 		
-		/*public String printSquare() {
-			if (this.currPiece != null) {
-				return this.currPiece.printPiece();
-			} else {
-				 if (this.getRow() + this.getCol() % 2 == 0 || this.getRow() + this.getCol() % 2 != 0) {
-					 return " ";
-				 } else {
-					 return "##";
-				 }
+		/**
+		 * 
+		 * @return String
+		 * returns what element should be in the square 
+		 */
+		
+		public String checkMod() {
+			if ((this.getRow() % 2 == 0 && this.getCol() % 2 == 0) || (this.getRow() % 2 != 0 && this.getCol() % 2 != 0)) {
+				return "  ";
+				} 
+			else {
+				return "##";
 			}
-		}*/
+		}
+		/**
+		 * 
+		 * 
+		 * @return String
+		 * returns square to be printed 
+		 */
 		
 		public String printSquare() {
 			if (this.currPiece != null) {
 				return this.currPiece.printPiece();
-			} else if ((this.getRow() % 2 == 0 && this.getCol() % 2 == 0) || (this.getRow() % 2 != 0 && this.getCol() % 2 != 0)) {
-					return "  ";
-			} else {
-					return "##";
+			} 
+			else { return checkMod();	
 			}
 		}
 	}
 	
 	private Square[][] chessboard;
 	
-	//Constructor
+	//Constructor,  set up the board with all the pieces.
 	public chessBoard() {
 		this.chessboard = new Square[8][8];
 		String pieceColor = null;
 
-		for (int curRank = 0; curRank < 8; curRank++)
+		for (int curRank = 0; curRank < 8; curRank++) {
 			for (int curFile = 0; curFile < 8; curFile++) {
 				ChessPiece newPiece = null;
 
@@ -92,20 +156,59 @@ public class chessBoard {
 
 				this.chessboard[curRank][curFile] = new Square(curRank, curFile, newPiece);
 			}
+		}
 	}
 	
+		
+	
+	/**
+	 * 
+	 * 
+	 * @param coordinate
+	 *   the coordinates of the current square
+	 * @return Square
+	 * returns the current square with current coordinates
+	 */
 	public Square getcurrSquare(Coordinates coordinate) {
 		return this.chessboard[coordinate.getRow()][coordinate.getCol()];
 	}
 	
+	/**
+	 * Returns a square given a rank and file
+	 * 
+	 * @param row 
+	 * (type int):current square row
+	 * @param col 
+	 * (type int):current square col
+	 * @return Square
+	 * returns the current square with row and col
+	 */
 	public Square getcurrSquare(int row, int col) {
 		return this.chessboard[row][col];
 	}
 	
+	/**
+	 * 
+	 * @param currRow 
+	 * (Type int)-> current row of the piece
+	 * @param currCol 
+	 * (Type int)-> current column of the piece
+	 * @param FinalRow 
+	 * (Type int)-> final row of the piece to be placed
+	 * @param 
+	 * FinalCol (Type int)-> final column of the piece to be placed
+	 */ 
 	public void makeMove(int currRow, int currCol, int finalRow, int finalCol) {
 		this.chessboard[finalRow][finalCol].currPiece = this.chessboard[currRow][currCol].currPiece;
 		this.chessboard[currRow][currCol].currPiece = null;
 	}
+	
+	/**
+	 * 
+	 * 
+	 * @return String
+	 * returns board in the format of string
+	 */
 	
 	public String printBoard() {
 		String boardPrint = "";

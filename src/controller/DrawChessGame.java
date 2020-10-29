@@ -1,3 +1,9 @@
+/**
+ * @author Abhay Saxena (ans192)
+
+ * @author Venkata Sai Karthik Gandrath (vg311)
+ */
+
 package controller;
 
 import java.util.Scanner;
@@ -17,10 +23,12 @@ public class DrawChessGame {
 		this.chessController = chessController;
 	}
 	
+	// prints the current ches board 
 	public void drawCurrBoard() {
 		System.out.println(this.chessController.getBoard().printBoard());
 	}
 	
+	// prints which players turn to play
 	public void printNext() {
 		if (chessController.getcurrPlayer().equals("White")) {
 			System.out.println("White's move: ");
@@ -29,7 +37,7 @@ public class DrawChessGame {
 		}
 		
 	}
-	
+	// takes in input from the player to make a decison 
 	public void getInput() {
 		String parsedText = inputText.nextLine().trim().toLowerCase();
 		System.out.println();
@@ -52,12 +60,24 @@ public class DrawChessGame {
 			if (parsedText.length() == 7) {
 				char promotionChar = parsedText.charAt(6);
 				String pieceColor = chessController.getcurrPlayer().equals("White") ? "White" : "Black";
-				switch (promotionChar) {
-				case 'Q': promote = new Queen(pieceColor); break;
-				case 'N': promote = new Knight(pieceColor); break;
-				case 'B': promote = new Bishop(pieceColor); break;
-				default: promote = new Rook(pieceColor); break;
-			}
+				if (promotionChar == 'Q') {
+					 promote = new Queen(pieceColor); 
+					 
+				}
+				else if(promotionChar == 'N') {
+					 promote = new Knight(pieceColor);
+					 
+				}
+				else if(promotionChar == 'B') {
+					promote = new Bishop(pieceColor); 
+					
+				}
+				else {
+					promote = new Rook(pieceColor); 
+					
+				}
+	
+				
 		}
 			
 			chessController.makeMove(curr, end, promote);
