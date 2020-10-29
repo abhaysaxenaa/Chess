@@ -63,7 +63,7 @@ public class ChessController {
 			ChessPiece currPiece = this.chessboard.getcurrSquare(row, col).getcurrPiece();
 			ChessPiece endPiece = this.chessboard.getcurrSquare(finalrow, finalcol).getcurrPiece();
 			
-			/*IMPLEMENT YOUR METHOD HERE*/
+			
 			Case exceptionalCases = new Case();
 			if( endPiece == null) {
 				exceptionalCases.isCapturing = false;
@@ -203,7 +203,7 @@ public class ChessController {
 	
 	//Checks if a given coordinate is in collision with a King piece.
 	/**
-	 * Checks if a piece at a given rank and file is colliding with the king
+	 * 
 	 * 
 	 * @param row 
 	 * (type int) row 
