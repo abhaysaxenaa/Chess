@@ -115,48 +115,37 @@ public class ChessController {
 				this.currPlayer = "White";
 			}
 		}
-	/*
-	 * * @param curr 
-	 *  current coordinate of the square for piece
-	 *            
-	 * @param end
-	 *   final coordinate of the square for piece to be moved
-	 * 
-	 * @return boolean 
-	 * 
-	 */
-	//Checks if there is any piece in between the current and end coordinate for the makeMove method to operate.
-	public boolean checkPath(Coordinates curr, Coordinates end) {
-		
-		int row = curr.getRow(), col = curr.getCol(), finalRow = end.getRow(), finalCol = end.getCol();
-		
-		//Checks if there is any other piece vertical to the coordinates.
-		if (curr.getCol() == end.getCol()) {
-			if (row < finalRow) {
-				int i = row;
-				while(i < finalRow){
-					if (this.chessboard.getcurrSquare(i, col) != null) {
-						return true;
+		public boolean verticalCheck(Coordinates curr, Coordinates end) {
+			int row = curr.getRow(), col = curr.getCol(), finalRow = end.getRow(), finalCol = end.getCol();
+			
+			//Checks if there is any other piece vertical to the coordinates.
+			
+				if (row < finalRow) {
+					int i = row;
+					while(i < finalRow){
+						if (this.chessboard.getcurrSquare(i, col) != null) {
+							return true;
+						}
+						i++;
 					}
-					i++;
+					return false;
+				}
+				
+				int i = finalRow;
+				while(i>row) {
+					if (this.chessboard.getcurrSquare(i, col) != null) {
+						return true;	
+					}
+					i--;
 				}
 				return false;
-			}
 			
-			int i = finalRow;
-			while(i>row) {
-				if (this.chessboard.getcurrSquare(i, col) != null) {
-					return true;	
-				}
-				i--;
-			}
-			return false;
 		}
 		
-		//Horizontal Check.
-		if (curr.getRow() == end.getRow()) {
+		public boolean horizontalCheck(Coordinates curr, Coordinates end) {
+			int row = curr.getRow(), col = curr.getCol(), finalRow = end.getRow(), finalCol = end.getCol();
 			if (col < finalCol) {
-			
+				
 				int j = col;
 				while(j<finalCol){
 					if (this.chessboard.getcurrSquare(row, j) != null) {
@@ -176,6 +165,28 @@ public class ChessController {
 				k--;
 			}
 			return false;
+		}
+	/*
+	 * * @param curr 
+	 *  current coordinate of the square for piece
+	 *            
+	 * @param end
+	 *   final coordinate of the square for piece to be moved
+	 * 
+	 * @return boolean 
+	 * 
+	 */
+	//Checks if there is any piece in between the current and end coordinate for the makeMove method to operate.
+	public boolean checkPath(Coordinates curr, Coordinates end) {
+		
+		int row = curr.getRow(), col = curr.getCol(), finalRow = end.getRow(), finalCol = end.getCol();
+		
+		//Checks if there is any other piece vertical to the coordinates.
+		if (curr.getCol() == end.getCol()) {return verticalCheck(curr,  end);}
+		
+		//Horizontal Check.
+		if (curr.getRow() == end.getRow()) {
+			return horizontalCheck(curr, end);
 		}
 		
 		//Diagonal and Adjacency Check.
